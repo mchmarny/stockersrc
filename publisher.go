@@ -5,12 +5,10 @@ import (
 	"encoding/json"
 
 	"cloud.google.com/go/pubsub"
-	"github.com/mchmarny/stocker/pkg/object"
-	"github.com/mchmarny/stocker/pkg/util"
 )
 
 var (
-	projectID = util.MustEnvVar("GCP_PROJECT", "")
+	projectID = mustEnvVar("GCP_PROJECT", "")
 )
 
 type queuePublisher struct {
@@ -18,8 +16,9 @@ type queuePublisher struct {
 }
 
 // Publish provides generic publish capability
-func (p *queuePublisher) publish(ctx context.Context, content *object.TextContent) error {
+func (p *queuePublisher) publish(ctx context.Context, content *TextContent) error {
 
+	logger.Printf("Publishing: %s - %s", content.Symbol, content.ID)
 	c, err := json.Marshal(content)
 	if err != nil {
 		return err
@@ -44,13 +43,9 @@ func newQueuePublisher(ctx context.Context, topicName string) (q *queuePublisher
 	}
 
 	// Creates the new topic.
-	t, err := client.CreateTopic(ctx, topicName)
-	if err != nil {
-		logger.Printf("Error creating pubsub topic: %v", err)
-		return nil, err
-	}
+	t := client.Topic(topicName)
 
-	queue := &QueuePublisher{
+	queue := &queuePublisher{
 		topic: t,
 	}
 

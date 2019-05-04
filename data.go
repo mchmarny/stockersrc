@@ -5,16 +5,14 @@ import (
 	"fmt"
 
 	bq "cloud.google.com/go/bigquery"
-	"github.com/mchmarny/stocker/pkg/object"
-	"github.com/mchmarny/stocker/pkg/util"
 	"google.golang.org/api/iterator"
 )
 
 var (
-	bqDataSet = util.MustEnvVar("BQ_DATSET", "")
+	bqDataSet = mustEnvVar("BQ_DATSET", "")
 )
 
-func getCompanies(ctx context.Context) (symbols []*object.Company, err error) {
+func getCompanies(ctx context.Context) (symbols []*Company, err error) {
 
 	logger.Println("Getting companies...")
 
@@ -32,10 +30,10 @@ func getCompanies(ctx context.Context) (symbols []*object.Company, err error) {
 		return nil, err
 	}
 
-	list := make([]*object.Company, 0)
+	list := make([]*Company, 0)
 
 	for {
-		var c object.Company
+		var c Company
 		err := it.Next(&c)
 		if err == iterator.Done {
 			break
@@ -47,6 +45,7 @@ func getCompanies(ctx context.Context) (symbols []*object.Company, err error) {
 		list = append(list, &c)
 	}
 
+	logger.Printf("Found %d companies", len(list))
 	return list, nil
 
 }

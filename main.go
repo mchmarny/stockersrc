@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	logger = log.New(os.Stdout, "[SOURCE] ", 0)
+	logger = log.New(os.Stdout, "[SOURCE] ", log.Lshortfile)
 )
 
 func main() {
@@ -40,4 +40,17 @@ func main() {
 		}
 	}
 
+}
+
+func mustEnvVar(key, fallbackValue string) string {
+
+	if val, ok := os.LookupEnv(key); ok {
+		return val
+	}
+
+	if fallbackValue == "" {
+		logger.Fatalf("Required envvar not set: %s", key)
+	}
+
+	return fallbackValue
 }

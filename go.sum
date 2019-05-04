@@ -38,9 +38,6 @@ github.com/hashicorp/golang-lru v0.5.0/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ
 github.com/hashicorp/golang-lru v0.5.1 h1:0hERBMJE1eitiLkihrMvRVBYAkpHzc/J3QdDN+dAcgU=
 github.com/hashicorp/golang-lru v0.5.1/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
-github.com/mchmarny/stocker v0.0.0-20190504152731-01c843203ae5 h1:1JoXsyKjc3TbciJMxecyeRsghKksdap2woabdjwL7Ps=
-github.com/mchmarny/stocker v0.0.0-20190504152731-01c843203ae5/go.mod h1:fhigPkAxo0512mGf5AZPdObxR1oRmOHNaFwpGsTzM2A=
-github.com/mchmarny/stocker v0.0.0-20190504154117-4918c6468ae7 h1:FrKEbJYnug4OnWfBXUdRlvuxRJPgtpyttKGvE9vb8hQ=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

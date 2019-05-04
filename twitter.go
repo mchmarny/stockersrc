@@ -3,14 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
+	"regexp"
+	"strings"
 	"time"
 
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
-
-	"github.com/mchmarny/stocker/pkg/object"
-	"github.com/mchmarny/stocker/pkg/util"
-
 )
 
 const (
@@ -19,10 +17,10 @@ const (
 )
 
 var (
-	consumerKey    = util.MustEnvVar("T_CONSUMER_KEY", "")
-	consumerSecret = util.MustEnvVar("T_CONSUMER_SECRET", "")
-	accessToken    = util.MustEnvVar("T_ACCESS_TOKEN", "")
-	accessSecret   = util.MustEnvVar("T_ACCESS_SECRET", "")
+	consumerKey    = mustEnvVar("T_CONSUMER_KEY", "")
+	consumerSecret = mustEnvVar("T_CONSUMER_SECRET", "")
+	accessToken    = mustEnvVar("T_ACCESS_TOKEN", "")
+	accessSecret   = mustEnvVar("T_ACCESS_SECRET", "")
 
 	// validation expressions
 	spaceReg = regexp.MustCompile(`\s+`)
@@ -30,7 +28,7 @@ var (
 )
 
 // provide runs twitter search and publishes to provided sinker
-func provide(ctx context.Context, co *object.Company, out chan<- *object.TextContent) {
+func provide(ctx context.Context, co *Company, out chan<- *TextContent) {
 
 	// twitter client config
 	config := oauth1.NewConfig(consumerKey, consumerSecret)
@@ -48,7 +46,7 @@ func provide(ctx context.Context, co *object.Company, out chan<- *object.TextCon
 			createdTime = time.Now()
 		}
 
-		tc := &common.TextContent{
+		tc := &TextContent{
 			Symbol:    co.Symbol,
 			ID:        fmt.Sprintf(twitterIDFormat, t.IDStr),
 			CreatedAt: createdTime,
