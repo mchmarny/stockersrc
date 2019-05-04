@@ -1,0 +1,39 @@
+#!/bin/bash
+
+declare -r IMAGE="gcr.io/s9-demo/stocker:0.1.4"
+declare -r CONFIG="https://raw.githubusercontent.com/mchmarny/stocker/master/config/dow.yaml"
+
+
+# gcloud beta compute disks create sa-creds --project=s9-demo --type=pd-standard --description=Service\ Accounts --size=10GB --zone=us-west1-c --physical-block-size=4096
+
+# launch container instance
+gcloud compute instances create-with-container stocker-vm \
+       --container-image $IMAGE \
+       --image-project $GCP_PROJECT_ID \
+       --zone "us-west1-c" \
+       --scopes "cloud-platform" \
+       --container-privileged \
+       --container-env="STOCKER_CONF_PATH=${CONFIG},T_CONSUMER_KEY=${T_CONSUMER_KEY},T_CONSUMER_SECRET=${T_CONSUMER_SECRET},T_ACCESS_TOKEN=${T_ACCESS_TOKEN},T_ACCESS_SECRET=${T_ACCESS_SECRET},STOCKER_CONF_PATH=${STOCKER_CONF_PATH},STOCK_PRICER_API_KEY=${STOCK_PRICER_API_KEY}"
+
+# launch container instance
+# gcloud compute instances create stocker \
+#      --project=s9-demo \
+#      --zone=us-west1-b \
+#      --machine-type=n1-standard-2 \
+#      --scopes=cloud-platform \
+#      --boot-disk-size=40GB \
+#      --boot-disk-type=pd-ssd
+
+# gcloud compute ssh stocker
+
+
+# ssh into container
+# gcloud compute ssh stocker --container stocker
+
+
+# logs
+# gcloud logging read "logName=projects/s9-demo/logs/gcplogs-docker-driver AND \
+#      jsonPayload.container.name=/stocker"
+
+# cleanup
+# gcloud compute instances delete stocker-vm
