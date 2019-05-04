@@ -1,10 +1,16 @@
 #!/bin/bash
 
 declare -r SOURCE_TOPIC_NAME="stocker-source"
-declare -r CONTENT_SET_NAME="stocker"
+declare -r STACK_NAME="stocker"
 declare -r CONTENT_TABLE_NAME="content"
 declare -r COMPANY_TABLE_NAME="company"
 
+
+echo "Deleting dataflow job ${STACK_NAME}-${SOURCE_TOPIC_NAME}-${CONTENT_TABLE_NAME}..."
+gcloud beta dataflow jobs cancel ${STACK_NAME}-${SOURCE_TOPIC_NAME}-${CONTENT_TABLE_NAME} --region "us-west1"
+
+echo "Deleting vm..."
+gcloud compute instances delete stockersrc-vm --zone "us-west1-c"
 
 echo "Deleting topics and subscriptions..."
 gcloud beta pubsub topics delete ${SOURCE_TOPIC_NAME}

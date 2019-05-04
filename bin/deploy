@@ -1,0 +1,20 @@
+#!/bin/bash
+
+declare -r IMAGE="gcr.io/s9-demo/stockersrc:0.1.1"
+
+gcloud compute instances create-with-container stockersrc-vm \
+       --container-image $IMAGE \
+       --zone "us-west1-c" \
+       --scopes "cloud-platform" \
+       --container-privileged \
+       --container-env="GCP_PROJECT=${GCP_PROJECT},BQ_DATSET=${BQ_DATSET},SOURCE_TOPIC_NAME=${SOURCE_TOPIC_NAME},T_CONSUMER_KEY=${T_CONSUMER_KEY},T_CONSUMER_SECRET=${T_CONSUMER_SECRET},T_ACCESS_TOKEN=${T_ACCESS_TOKEN},T_ACCESS_SECRET=${T_ACCESS_SECRET}"
+
+
+# ssh into instance
+# gcloud compute ssh stockersrc-vm --zone "us-west1-c"
+# docker ps
+# docker attach **stockersrc**
+
+
+# cleanup
+# gcloud compute instances delete stockersrc-vm --zone "us-west1-c"
