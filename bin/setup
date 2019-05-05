@@ -1,19 +1,18 @@
 #!/bin/bash
 
 declare -r SOURCE_TOPIC_NAME="stocker-source"
-declare -r TARGET_TOPIC_NAME="stocker-processed"
 declare -r STACK_NAME="stocker"
 declare -r CONTENT_TABLE_NAME="content"
 declare -r COMPANY_TABLE_NAME="company"
 
 echo "Creating pubsub topic..."
-gcloud beta pubsub topics create ${SOURCE_TOPIC_NAME}
+gcloud beta pubsub topics create stocker-source
 
 
-echo "Creating bigquery tables..."
-bq mk "${STACK_NAME}"
+echo "Creating bigquery content table..."
+bq mk stocker
 bq query --use_legacy_sql=false "
-  CREATE OR REPLACE TABLE ${STACK_NAME}.${CONTENT_TABLE_NAME} (
+  CREATE OR REPLACE TABLE stocker.content (
     symbol STRING NOT NULL,
     cid STRING NOT NULL,
     created TIMESTAMP NOT NULL,
@@ -25,25 +24,13 @@ bq query --use_legacy_sql=false "
     score FLOAT64 NOT NULL
 )"
 
-
+echo "Creating bigquery company table..."
 bq query --use_legacy_sql=false "
-  CREATE OR REPLACE TABLE ${STACK_NAME}.${COMPANY_TABLE_NAME} (
+  CREATE OR REPLACE TABLE stocker.company (
     symbol STRING NOT NULL,
     aliases STRING NOT NULL
 )"
 
-
-
-# INSERT INTO ${STACK_NAME}.${COMPANY_TABLE_NAME} (symbol, aliases)
-# VALUES('GOOGL', 'Google,GCP'),
-#        ('AAPL', 'Apple'),
-#        ('AMZN', 'Amazon,AWS'),
-#        ('MSFT', 'Microsoft,Azure')
-
-
-# echo "Creating dataflow job to drain ${TARGET_TOPIC_NAME} topic to ${STACK_NAME}.${CONTENT_TABLE_NAME}..."
-# gcloud beta dataflow jobs run ${STACK_NAME}-${TARGET_TOPIC_NAME}-${CONTENT_TABLE_NAME} \
-#   --gcs-location gs://dataflow-templates/pubsub-to-bigquery/template_file \
-#   --parameters="topic=projects/${GCP_PROJECT}/topics/${TARGET_TOPIC_NAME}","table=${GCP_PROJECT}:${STACK_NAME}.${CONTENT_TABLE_NAME}" \
-#   --region "us-west1"
+echo "Load company data..."
+bq --location=US load --source_format=CSV stocker.company ./bin/stocks.csv
 
