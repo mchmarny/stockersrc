@@ -1,9 +1,7 @@
 #!/bin/bash
 
-declare -r IMAGE="gcr.io/s9-demo/stockersrc:0.1.1"
-
 gcloud compute instances create-with-container stockersrc-vm \
-       --container-image $IMAGE \
+       --container-image "gcr.io/s9-demo/stockersrc:0.1.1" \
        --zone "us-west1-c" \
        --scopes "cloud-platform" \
        --container-privileged \
