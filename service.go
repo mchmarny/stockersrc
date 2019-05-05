@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	topicName = mustEnvVar("SOURCE_TOPIC_NAME", "")
+	topicName = mustEnvVar("SOURCE_TOPIC_NAME", "stocker-source")
 )
 
 func getContent(ctx context.Context) {
@@ -41,7 +41,7 @@ func getContent(ctx context.Context) {
 		t := <-sourceCh
 		pubErr := pub.publish(ctx, t)
 		if pubErr != nil {
-			logger.Printf("Error publishing: %v", err)
+			logger.Printf("Error publishing: %v", pubErr)
 		}
 	}
 

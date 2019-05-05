@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	bqDataSet = mustEnvVar("BQ_DATSET", "")
+	bqDataSet = mustEnvVar("BQ_DATSET", "stocker")
 )
 
 func getCompanies(ctx context.Context) (symbols []*Company, err error) {
