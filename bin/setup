@@ -16,7 +16,8 @@ bq query --use_legacy_sql=false "
     source STRING NOT NULL,
     content STRING NOT NULL,
     magnitude FLOAT64 NOT NULL,
-    score FLOAT64 NOT NULL
+    score FLOAT64 NOT NULL,
+    retweet BOOL NOT NULL
 )"
 
 echo "Creating bigquery company table..."

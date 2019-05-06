@@ -54,6 +54,7 @@ func provide(ctx context.Context, co *Company, out chan<- *TextContent) {
 			Lang:      t.Lang,
 			Source:    fmt.Sprintf(twitterSourceFormat, t.User.ScreenName, t.IDStr),
 			Content:   clean(t.Text),
+			IsRetweet: t.RetweetedStatus != nil,
 		}
 
 		// TODO" Externalize lang support
