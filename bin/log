@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Logging
+INSTANCE_ID=$(gcloud compute instances describe stockersrc-vm --zone us-west1-c --format="value(id)")
+gcloud logging read "resource.type=gce_instance AND \
+    logName=projects/${GCP_PROJECT}/logs/cos_containers AND \
+    resource.labels.instance_id=${INSTANCE_ID}"
