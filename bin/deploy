@@ -3,7 +3,7 @@
 
 # TODO" Publish public images
 gcloud compute instances create-with-container stockersrc-vm \
-       --container-image "gcr.io/s9-demo/stockersrc:0.1.3" \
+       --container-image "gcr.io/s9-demo/stockersrc:0.1.4" \
        --zone "us-west1-c" \
        --scopes "cloud-platform" \
        --container-privileged \

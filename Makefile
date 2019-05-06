@@ -13,4 +13,4 @@ mod:
 image: mod
 	gcloud builds submit \
 		--project ${GCP_PROJECT} \
-		--tag gcr.io/${GCP_PROJECT}/stockersrc:0.1.3
+		--tag gcr.io/${GCP_PROJECT}/stockersrc:0.1.4
